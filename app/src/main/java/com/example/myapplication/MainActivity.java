@@ -80,32 +80,15 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.blank);
         EmailSignIn();
         mAuth = FirebaseAuth.getInstance();
         FirebaseUser user = mAuth.getCurrentUser();
         if(user!=null)email = user.getEmail().toString();
         else email = "Null string";
-        setContentView(R.layout.activity_main);
-        Spinner spinner = (Spinner) findViewById(R.id.spinner);
-        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this,
-                R.array.occ_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        spinner.setAdapter(adapter);
 
-
-        next = findViewById(R.id.Next);
-        next.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),email, Toast.LENGTH_LONG).show();
-                String name =null;
-                Intent dash = new Intent(MainActivity.this, Dashboard.class);
-                dash.putExtra("name",spinner.getSelectedItem().toString());
-                dash.putExtra("email",email);
-                startActivity(dash);
-            }
-        });
+        Intent dash = new Intent(MainActivity.this, Dashboard.class);
+        startActivity(dash);
     }
-
 
 }

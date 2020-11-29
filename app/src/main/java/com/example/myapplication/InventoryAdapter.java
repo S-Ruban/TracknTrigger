@@ -13,6 +13,14 @@ import java.util.List;
 
 public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     List<String> categories;
+    private OnItemClickListener mListener;
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public InventoryAdapter(List<String> categories) {
         this.categories = categories;
@@ -22,7 +30,7 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.inventory_card_layout, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, mListener);
     }
 
     @Override
@@ -38,9 +46,20 @@ public class InventoryAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView mname;
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, final OnItemClickListener listener) {
             super(itemView);
             mname = itemView.findViewById(R.id.inventory_category_text);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        int position = getAdapterPosition();
+                        if (position != RecyclerView.NO_POSITION) {
+                            listener.onItemClick(position);
+                        }
+                    }
+                }
+            });
         }
     }
 }

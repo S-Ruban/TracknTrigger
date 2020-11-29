@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,10 +22,13 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class InventoryFragmentInner extends Fragment {
     RecyclerView recyclerView;
     InventoryAdapter adapter;
+    private static final String TAG = "lol";
     private String name = null;
 
     @Override
@@ -68,7 +72,11 @@ public class InventoryFragmentInner extends Fragment {
             public void onClick(View v) {
                 EditText editText = (EditText) view.findViewById(R.id.edittext_new_category);
                 String edittext = editText.getText().toString();
-                reference.child(edittext).setValue(edittext);
+                Map<String, Object> mp = new HashMap<>();
+                for(String str: list)
+                    mp.put(str, str);
+                mp.put(edittext, edittext);
+                FirebaseDatabase.getInstance().getReference("Inventory/" + name).updateChildren(mp);
                 Intent intent = new Intent(view.getContext(), Dashboard.class);
                 intent.putExtra("inner", true);
                 intent.putExtra("string", name);
@@ -76,13 +84,13 @@ public class InventoryFragmentInner extends Fragment {
             }
         });
 
-        Button button_remove = (Button) view.findViewById(R.id.button_add);
+        Button button_remove = (Button) view.findViewById(R.id.button_remove);
         button_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 EditText editText = (EditText) view.findViewById(R.id.edittext_remove_category);
                 String edittext = editText.getText().toString();
-                reference.child(edittext).removeValue();
+                FirebaseDatabase.getInstance().getReference("Inventory").child(name).child(edittext).removeValue();
                 Intent intent = new Intent(view.getContext(), Dashboard.class);
                 intent.putExtra("inner", true);
                 intent.putExtra("string", name);

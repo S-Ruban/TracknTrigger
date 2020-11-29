@@ -26,14 +26,24 @@ public class Dashboard extends AppCompatActivity {
             innerFrag = bundle.getBoolean("inner", false);
             innerString = bundle.getString("string", null);
         }
-        // Log.i(TAG, "onCreate: dashboard " + innerFrag + " " + innerString);
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
         if (savedInstanceState == null) {
+            Fragment selectedFragment;
+            if(innerFrag) {
+                selectedFragment = new InventoryFragmentInner();
+                Bundle args = new Bundle();
+                args.putString("name", innerString);
+                selectedFragment.setArguments(args);
+
+            } else {
+                selectedFragment = new InventoryFragment();
+
+            }
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new InventoryFragment()).commit();
+                    selectedFragment).commit();
         }
     }
 
@@ -44,22 +54,10 @@ public class Dashboard extends AppCompatActivity {
                     Fragment selectedFragment = null;
                     switch (item.getItemId()) {
                         case R.id.nav_inventory:
-                            if(innerFrag) {
-                                selectedFragment = new InventoryFragmentInner();
-                                Bundle args = new Bundle();
-                                args.putString("name", innerString);
-                                selectedFragment.setArguments(args);
-                                Toast.makeText(getApplicationContext(),"innerfrag", Toast.LENGTH_LONG).show();
-                            } else {
-                                selectedFragment = new InventoryFragment();
-                                Toast.makeText(getApplicationContext(),"outerfrag", Toast.LENGTH_LONG).show();
-                            }
+                            selectedFragment = new InventoryFragment();
                             break;
                         case R.id.nav_checklist:
                             selectedFragment = new ChecklistFragment();
-                            break;
-                        case R.id.nav_notes:
-                            selectedFragment = new NotesFragment();
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

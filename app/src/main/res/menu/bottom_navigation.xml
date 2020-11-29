@@ -8,8 +8,4 @@
         android:id="@+id/nav_checklist"
         android:icon="@drawable/ic_checklist"
         android:title="Checklist" />
-    <item
-        android:id="@+id/nav_notes"
-        android:icon="@drawable/ic_notes"
-        android:title="Notes" />
 </menu>

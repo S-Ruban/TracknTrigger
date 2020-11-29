@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +23,10 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link InventoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class InventoryFragment extends Fragment {
     RecyclerView recyclerView;
     InventoryAdapter adapter;
+    private InventoryAdapter mAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,6 +56,19 @@ public class InventoryFragment extends Fragment {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(container.getContext(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
+
+
+        adapter.setOnItemClickListener(new InventoryAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(view.getContext(), Dashboard.class);
+                intent.putExtra("inner", true);
+                intent.putExtra("string", list.get(position));
+                startActivity(intent);
+            }
+        });
+
+
 
         Button button_add = (Button) view.findViewById(R.id.button_add);
         button_add.setOnClickListener(new View.OnClickListener() {
