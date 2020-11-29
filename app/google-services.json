@@ -1,0 +1,77 @@
+{
+  "project_info": {
+    "project_number": "995414900757",
+    "firebase_url": "https://oops-88215.firebaseio.com",
+    "project_id": "oops-88215",
+    "storage_bucket": "oops-88215.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995414900757:android:15b9838e8aa48e16bb0e1c",
+        "android_client_info": {
+          "package_name": "com.example.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "995414900757-07898jemm3aco4os63bbjcucl7kht8mo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAjOtweSGMFFARK8JYUYWxws-iJV4bNck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "995414900757-07898jemm3aco4os63bbjcucl7kht8mo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:995414900757:android:9051c07e76233c49bb0e1c",
+        "android_client_info": {
+          "package_name": "com.example.oops"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "995414900757-8kb4i7rsc7il05ov12p53v671drqpc5v.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.oops",
+            "certificate_hash": "da032210d77f72e6570ba043cef8f2a5b7e7b9b6"
+          }
+        },
+        {
+          "client_id": "995414900757-07898jemm3aco4os63bbjcucl7kht8mo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBAjOtweSGMFFARK8JYUYWxws-iJV4bNck"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "995414900757-07898jemm3aco4os63bbjcucl7kht8mo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

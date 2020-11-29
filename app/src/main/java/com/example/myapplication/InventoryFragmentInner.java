@@ -2,17 +2,17 @@ package com.example.myapplication;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -22,14 +22,16 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link InventoryFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
-public class InventoryFragment extends Fragment {
+public class InventoryFragmentInner extends Fragment {
     RecyclerView recyclerView;
     InventoryAdapter adapter;
+    private String name = null;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        name = getArguments().getString("name", "null");
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -39,7 +41,7 @@ public class InventoryFragment extends Fragment {
         recyclerView = view.findViewById(R.id.recyclerview_inventory);
 
         ArrayList<String> list = new ArrayList<>();
-        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Inventory");
+        DatabaseReference reference = FirebaseDatabase.getInstance().getReference("Inventory").child(name);
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -56,7 +58,7 @@ public class InventoryFragment extends Fragment {
         });
 
         adapter = new InventoryAdapter(list);
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(container.getContext(), 2, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(container.getContext(), 1, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
         recyclerView.setAdapter(adapter);
 
@@ -68,13 +70,13 @@ public class InventoryFragment extends Fragment {
                 String edittext = editText.getText().toString();
                 reference.child(edittext).setValue(edittext);
                 Intent intent = new Intent(view.getContext(), Dashboard.class);
-                intent.putExtra("inner", false);
-                intent.putExtra("string", "bad");
+                intent.putExtra("inner", true);
+                intent.putExtra("string", name);
                 startActivity(intent);
             }
         });
 
-        Button button_remove = (Button) view.findViewById(R.id.button_remove);
+        Button button_remove = (Button) view.findViewById(R.id.button_add);
         button_remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,11 +84,12 @@ public class InventoryFragment extends Fragment {
                 String edittext = editText.getText().toString();
                 reference.child(edittext).removeValue();
                 Intent intent = new Intent(view.getContext(), Dashboard.class);
-                intent.putExtra("inner", false);
-                intent.putExtra("string", "bad");
+                intent.putExtra("inner", true);
+                intent.putExtra("string", name);
                 startActivity(intent);
             }
         });
+
 
         return view;
     }
